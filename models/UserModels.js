@@ -20,5 +20,10 @@ const User= new moonogse.Schema(
         }
 
     },
-
+    {
+        timestamps:true
+    }
+)
+module.exports=mongoose.model(
+    "User",UserSchema
 )
