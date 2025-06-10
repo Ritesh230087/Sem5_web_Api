@@ -1,6 +1,11 @@
-const moonogse=require("mongoose")
-const User= new moonogse.Schema(
+const mongoose=require("mongoose")
+const User= new mongoose.Schema(
     {
+        userId: {
+            type: String,
+            required: true,
+            unique: true,
+        },   
         first_name:{
             type:String,
             required:true,
