@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken")
 exports.registerUser = async (req, res) => {
     const { userId, email, firstName,
         lastName, password } = req.body
-    // validation
     if (!firstName || !lastName  ||!email || !password) {
         return res.status(400).json(
             {
@@ -14,7 +13,6 @@ exports.registerUser = async (req, res) => {
             }
         )
     }
-    // db logic in try/catch
     try {
         const existingUser = await User.findOne(
             {
@@ -29,10 +27,9 @@ exports.registerUser = async (req, res) => {
                 }
             )
         }
-        // hash password
         const hasedPas = await bcrypt.hash(
             password, 10
-        ) // 10 is complexity
+        ) 
         const newUser = new User({
             email,
             firstName,
@@ -44,6 +41,52 @@ exports.registerUser = async (req, res) => {
             {
                 "success": true,
                 "message": "User Registered"
+            }
+        )
+    } catch (err) {
+        return res.status(500).json(
+            { "success": false, "message": "Server error" }
+        )
+    }
+}
+
+exports.loginUser = async (req, res) => {
+    const { email, password } = req.body
+    if (!email || !password) {
+        return res.status(400).json(
+            { "success": false, "message": "Missing field" }
+        )
+    }
+    try {
+        const getUser = await User.findOne(
+            { email: email }
+        )
+        if (!getUser) {
+            return res.status(403).json(
+                { "success": false, "message": "User not found" }
+            )
+        }
+        const passwordCHeck = await bcrypt.compare(password, getUser.password)
+        if (!passwordCHeck) {
+            return res.status(403).json(
+                { "success": false, "message": "Invalid credentials" }
+            )
+        }
+
+        const payload = {
+            "_id": getUser._id,
+            "email": getUser.email,
+            "username": getUser.username
+        }
+        const token = jwt.sign(payload, process.env.SECRET,
+            { expiresIn: "7d" }
+        )
+        return res.status(200).json(
+            {
+                "success": true,
+                "message": "Login Successful",
+                "data": getUser,
+                "token": token 
             }
         )
     } catch (err) {
