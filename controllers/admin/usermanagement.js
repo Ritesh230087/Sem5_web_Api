@@ -67,7 +67,7 @@ exports.getOneUser = async (req, res) => {
         const id = req.params.id;
         const user = await User.findOne({ _id: id });
         return res.status(200).json({
-            success: true, // ✅ fixed typo: "succes" → "success"
+            success: true,
             message: "One user fetched",
             data: user,
         });
