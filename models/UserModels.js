@@ -30,5 +30,5 @@ const User= new mongoose.Schema(
     }
 )
 module.exports=mongoose.model(
-    "User",UserSchema
+    "User",User
 )
