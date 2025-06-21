@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const User = require("../models/User")
+const User = require("../models/UserModels")
 
 exports.authenticateUser = async (req, res, next) => {
     try {
@@ -27,12 +27,12 @@ exports.authenticateUser = async (req, res, next) => {
     }
 }
 
-exports.isAdmin = (req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
-        next()
-    } else {
-        return res.status(403).json(
-            { "success": false, "message": "Access denied, not admin" }
-        )
-    }
-}
+// exports.isAdmin = (req, res, next) => {
+//     if (req.user && req.user.role === 'admin') {
+//         next()
+//     } else {
+//         return res.status(403).json(
+//             { "success": false, "message": "Access denied, not admin" }
+//         )
+//     }
+// }

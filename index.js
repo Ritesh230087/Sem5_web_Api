@@ -4,7 +4,9 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const userRoutes=require('./routes/userRoute')
 const categoryRouteAdmin= require('./routes/admin/categoryRouteAdmin')
+const userRoutesAdmin = require('./routes/admin/userRouteAdmin');
 const app = express();
+const path = require("path") 
 const PORT = process.env.PORT || 5050;
 
 
@@ -17,6 +19,9 @@ app.use(express.json());
 
 app.use("/api/auth",userRoutes)
 app.use("/api/admin/category", categoryRouteAdmin)
+app.use("/api/admin/user", require("./routes/admin/userRouteAdmin"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+console.log("Serving static files from:", path.join(__dirname, "uploads"));
 
 app.get('/hey', (req, res) => {
   res.send('Hello World!');
