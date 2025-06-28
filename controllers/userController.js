@@ -86,7 +86,7 @@ exports.loginUser = async (req, res) => {
             lastName: getUser.lastName,
         };
 
-        const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "7d" });
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
 
         return res.status(200).json({
             success: true,
