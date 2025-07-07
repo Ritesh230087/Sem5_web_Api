@@ -44,7 +44,6 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// Get all users
 exports.getUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -61,7 +60,6 @@ exports.getUsers = async (req, res) => {
     }
 };
 
-// Get one user
 exports.getOneUser = async (req, res) => {
     try {
         const id = req.params.id;
@@ -79,7 +77,6 @@ exports.getOneUser = async (req, res) => {
     }
 };
 
-// Update one user
 exports.updateOne = async (req, res) => {
     const { firstName, lastName } = req.body;
     const _id = req.params.id;
@@ -106,7 +103,6 @@ exports.updateOne = async (req, res) => {
     }
 };
 
-// Delete one user
 exports.deleteOne = async (req, res) => {
     const _id = req.params.id;
     try {
