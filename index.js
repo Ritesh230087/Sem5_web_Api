@@ -20,6 +20,7 @@ app.use(express.json());
 
 app.use("/api/auth",userRoutes)
 app.use("/api/admin/category", categoryRouteAdmin)
+app.use("/api/admin/ribbon", ribbonRouteAdmin)
 app.use("/api/admin/user", require("./routes/admin/userRouteAdmin"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 console.log("Serving static files from:", path.join(__dirname, "uploads"));
