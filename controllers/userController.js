@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 
 // Register user
 exports.registerUser = async (req, res) => {
-    const { email, firstName, lastName, password } = req.body;
+    const { email, firstName, lastName, password, role } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
         return res.status(400).json({
@@ -27,11 +27,12 @@ exports.registerUser = async (req, res) => {
         const hashedPas = await bcrypt.hash(password, 10);
 
         const newUser = new User({
-            userId: uuidv4(),
+            // userId: uuidv4(),
             email,
             firstName,
             lastName,
             password: hashedPas,
+            role: role || "normal", 
         });
 
         await newUser.save();
@@ -41,6 +42,8 @@ exports.registerUser = async (req, res) => {
             message: "User Registered",
         });
     } catch (err) {
+        
+    console.error("🔥 Register error:", err);
         return res.status(500).json({
             success: false,
             message: "Server error",
@@ -80,7 +83,7 @@ exports.loginUser = async (req, res) => {
 
         const payload = {
             _id: getUser._id,
-            userId: getUser.userId, 
+            // userId: getUser.userId, 
             email: getUser.email,
             firstName: getUser.firstName,
             lastName: getUser.lastName,

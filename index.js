@@ -5,6 +5,7 @@ const connectDB = require('./config/db')
 const userRoutes=require('./routes/userRoute')
 const categoryRouteAdmin= require('./routes/admin/categoryRouteAdmin')
 const userRoutesAdmin = require('./routes/admin/userRouteAdmin');
+const ribbonRouteAdmin=require('./routes/admin/ribbonRouteAdmin')
 const app = express();
 const path = require("path") 
 const PORT = process.env.PORT || 5050;
