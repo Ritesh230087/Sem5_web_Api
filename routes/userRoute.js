@@ -12,4 +12,13 @@ router.post(
     "/login",
     loginUser
 )
+
+router.post(
+    "/request-reset",
+     sendResetLink
+)
+router.post(
+    "/reset-password/:token", 
+    resetPassword
+)
 module.exports = router
