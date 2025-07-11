@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const RibbonSchema = new mongoose.Schema(
   {
-    name: {
+    label: {
       type: String,
       required: true
     },

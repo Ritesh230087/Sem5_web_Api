@@ -118,7 +118,7 @@ exports.sendResetLink = async (req, res) => {
     try{
         const user = await User.findOne({ email })
         if(!user) return res.status(404).json({success: false, message: "User not found"})
-        const token = jwt.sign({id: user._id}, process.env.SECRET, {expiresIn: "20m"})
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "20m"})
         const resetUrl = process.env.CLIENT_URL + "/reset-password/" + token
         const mailOptions = {
             from: `"Your app" <${process.env.EMAIL_USER}>`, // backtick
@@ -140,7 +140,7 @@ exports.resetPassword = async  (req, res) => {
     const { token } = req.params;
     const { password } = req.body
     try{
-        const decoded = jwt.verify(token, process.env.SECRET)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const hashed = await bcrypt.hash(password, 10)
         await User.findByIdAndUpdate(decoded.id, { password: hashed })
         return res.status(200).json({ success: true, message: "Password updated" })

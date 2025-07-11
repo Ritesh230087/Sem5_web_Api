@@ -8,6 +8,7 @@ exports.createProduct = async (req, res) => {
       price,
       originalPrice,
       quantity,
+      featured,
       categoryId,
       ribbonId
     } = req.body;
@@ -32,6 +33,7 @@ exports.createProduct = async (req, res) => {
       youSave,
       quantity,
       filepath,
+      featured,
       categoryId,
       ribbonId: ribbonId || null
     });
@@ -54,7 +56,7 @@ exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find()
       .populate("categoryId", "name")
-      .populate("ribbonId", "name color");
+      .populate("ribbonId", "label color");
     return res.status(200).json({ success: true, data: products });
   } catch (err) {
     return res.status(500).json({ success: false, message: "Server Error" });
@@ -65,7 +67,7 @@ exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate("categoryId", "name")
-      .populate("ribbonId", "name color");
+      .populate("ribbonId", "label color");
 
     if (!product) {
       return res.status(404).json({ success: false, message: "Product not found" });
@@ -85,6 +87,7 @@ exports.updateProduct = async (req, res) => {
       price,
       originalPrice,
       quantity,
+      featured,
       categoryId,
       ribbonId
     } = req.body;
@@ -97,6 +100,7 @@ exports.updateProduct = async (req, res) => {
       quantity,
       youSave: originalPrice - price,
       discountPercent: Math.round(((originalPrice - price) / originalPrice) * 100),
+      featured: featured || false,
       categoryId,
       ribbonId: ribbonId || null
     };
@@ -125,6 +129,18 @@ exports.updateProduct = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ featured: true })
+      .populate("categoryId", "name")
+      .populate("ribbonId", "label color");
+    return res.status(200).json({ success: true, data: featuredProducts });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 
 exports.deleteProduct = async (req, res) => {
   try {

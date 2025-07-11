@@ -2,47 +2,47 @@ const User = require("../../models/UserModels");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid"); 
 
-exports.createUser = async (req, res) => {
-    const { email, firstName, lastName, password } = req.body;
-    if (!firstName || !lastName || !email || !password) {
-        return res.status(400).json({
-            success: false,
-            message: "Missing fields",
-        });
-    }
+// exports.createUser = async (req, res) => {
+//     const { email, firstName, lastName, password } = req.body;
+//     if (!firstName || !lastName || !email || !password) {
+//         return res.status(400).json({
+//             success: false,
+//             message: "Missing fields",
+//         });
+//     }
 
-    try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({
-                success: false,
-                message: "User exists",
-            });
-        }
+//     try {
+//         const existingUser = await User.findOne({ email });
+//         if (existingUser) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "User exists",
+//             });
+//         }
 
-        const hashedPas = await bcrypt.hash(password, 10);
+//         const hashedPas = await bcrypt.hash(password, 10);
 
-        const newUser = new User({
-            userId: uuidv4(), 
-            email,
-            firstName,
-            lastName,
-            password: hashedPas,
-        });
+//         const newUser = new User({
+//             userId: uuidv4(), 
+//             email,
+//             firstName,
+//             lastName,
+//             password: hashedPas,
+//         });
 
-        await newUser.save();
+//         await newUser.save();
 
-        return res.status(201).json({
-            success: true,
-            message: "User Registered",
-        });
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Server error",
-        });
-    }
-};
+//         return res.status(201).json({
+//             success: true,
+//             message: "User Registered",
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             success: false,
+//             message: "Server error",
+//         });
+//     }
+// };
 
 exports.getUsers = async (req, res) => {
     try {

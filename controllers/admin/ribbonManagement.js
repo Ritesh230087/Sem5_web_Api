@@ -3,9 +3,11 @@ const Ribbon = require("../../models/RibbonModels");
 
 exports.createRibbon = async (req, res) => {
   try {
-    const { name, color } = req.body;
+    const { label, color } = req.body;
 
-    const colorHex = tinycolor(color).toHexString(); 
+    console.log("Ribbon creation request body:", req.body); 
+
+    const colorHex = tinycolor(color).toHexString();
 
     if (!tinycolor(color).isValid()) {
       return res.status(400).json({
@@ -14,7 +16,7 @@ exports.createRibbon = async (req, res) => {
       });
     }
 
-    const ribbon = new Ribbon({ name, color: colorHex });
+    const ribbon = new Ribbon({ label, color: colorHex });
     await ribbon.save();
 
     return res.status(201).json({
@@ -24,10 +26,10 @@ exports.createRibbon = async (req, res) => {
     });
 
   } catch (err) {
-    console.error(err);
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
 
 exports.getAllRibbons = async (req, res) => {
   try {
@@ -40,7 +42,7 @@ exports.getAllRibbons = async (req, res) => {
 
 exports.updateRibbon = async (req, res) => {
   try {
-    const { name, color } = req.body;
+    const { label, color } = req.body;
 
     if (!tinycolor(color).isValid()) {
       return res.status(400).json({
@@ -51,7 +53,7 @@ exports.updateRibbon = async (req, res) => {
 
     const updatedRibbon = await Ribbon.findByIdAndUpdate(
       req.params.id,
-      { name, color: tinycolor(color).toHexString() },
+      { label, color: tinycolor(color).toHexString() },
       { new: true }
     );
 
@@ -69,6 +71,19 @@ exports.updateRibbon = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+exports.getRibbonById = async (req, res) => {
+  try {
+    const ribbon = await Ribbon.findById(req.params.id);
+    if (!ribbon) {
+      return res.status(404).json({ success: false, message: "Ribbon not found" });
+    }
+    return res.status(200).json({ success: true, data: ribbon });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 
 
 exports.deleteRibbon = async (req, res) => {

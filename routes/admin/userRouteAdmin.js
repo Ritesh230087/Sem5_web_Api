@@ -5,10 +5,10 @@ const { createUser,
 } = require("../../controllers/admin/usermanagement")
 const { authenticateUser, isAdmin } = require("../../middlewares/authorizedUsers")
 // const { authenticateUser } = require("../../middlewares/authorizedUsers")
-router.post(
-    "/",
-    createUser
-)
+// router.post(
+//     "/",
+//     createUser
+// )
 
 router.get(
     "/",
