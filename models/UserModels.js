@@ -1,11 +1,6 @@
 const mongoose=require("mongoose")
 const User= new mongoose.Schema(
-    {
-        userId: {
-            type: String,
-            required: true,
-            unique: true,
-        },   
+    { 
         firstName:{
             type:String,
             required:true,
@@ -22,8 +17,11 @@ const User= new mongoose.Schema(
         password:{
             type:String,
             required:true,
+        },
+        role:{
+            type: String,
+            default: "normal"
         }
-
     },
     {
         timestamps:true
