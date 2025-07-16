@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
@@ -19,9 +18,11 @@ const orderSchema = new mongoose.Schema({
     fullName: String,
     phone: String,
     country: String,
+    district: String, 
     city: String,
     addressLine: String,
     postalCode: String,
+    notes: String,  
   },
   paymentMethod: {
     type: String,
