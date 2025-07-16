@@ -7,6 +7,7 @@ const categoryRouteAdmin= require('./routes/admin/categoryRouteAdmin')
 const productRouteAdmin = require("./routes/admin/productRouteAdmin");
 const orderRouteAdmin=require("./routes/admin/orderRouteAdmin")
 const payment= require("./routes/admin/payment") 
+const notificationRoute = require('./routes/admin/notificationRoute');
 const userRoutesAdmin = require('./routes/admin/userRouteAdmin');
 const ribbonRouteAdmin=require('./routes/admin/ribbonRouteAdmin')
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/admin/ribbon", ribbonRouteAdmin)
 app.use("/api/admin/product", productRouteAdmin);
 app.use("/api/admin/order", orderRouteAdmin);
 app.use('/api/payments', payment);
+app.use('/api/notifications', notificationRoute);
 app.use("/api/admin/user", userRoutesAdmin);
 app.use("/api/admin/user", require("./routes/admin/userRouteAdmin"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
