@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Notification = require('../../models/NotificationModel');
-router.get('/', /* authMiddleware, */ async (req, res) => {
-  // const userId = req.user.id; // Get user from auth middleware
-  const notifications = await Notification.find({ userId: req.query.userId }).sort({ createdAt: -1 });
-  res.json(notifications);
-});
 
-// Mark as read
-router.post('/:id/read', /* authMiddleware, */ async (req, res) => {
-    await Notification.findByIdAndUpdate(req.params.id, { isRead: true });
-    res.json({ success: true });
-});
+const { getNotifications, markAsRead, markAllAsRead } = require('../../controllers/NotificationController');
+const { authenticateUser } = require('../../middlewares/authorizedUsers');
+
+router.get('/', authenticateUser, getNotifications);
+router.post('/:id/read', authenticateUser, markAsRead);
+router.post('/mark-all-read', authenticateUser, markAllAsRead);
 
 module.exports = router;
