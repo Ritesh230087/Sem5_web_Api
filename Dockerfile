@@ -1,26 +1,26 @@
-#Image choose/ linux server
+# Image choose/ linux server
 
-From node:22 -alpine
+# From node:22 -alpine
 
-WORKDIR /app
+# WORKDIR /app
 
-#Copy source(current) destination(docker)
-COPY package*.json ./
+# #Copy source(current) destination(docker)
+# COPY package*.json ./
 
-#Shell/Terminal command
-Run npm install
+# #Shell/Terminal command
+# Run npm install
 
-#Copy rest of the source doe
-COPY . .
+# #Copy rest of the source doe
+# COPY . .
 
-#Docker port
-EXPOSE 5050
+# #Docker port
+# EXPOSE 5050
 
-# Entry point (run derver)
-CMD ["node", "server.js"]
+# # Entry point (run derver)
+# CMD ["node", "server.js"]
 
-# docker build -t backend-app .
-# docker run -d -p 5050:5050 --name backend backend-app
-# docker ps -a
-# docker stop CONTAINERID
-# docker rm CONTAINERID
+# # docker build -t backend-app .
+# # docker run -d -p 5050:5050 --name backend backend-app
+# # docker ps -a
+# # docker stop CONTAINERID
+# # docker rm CONTAINERID

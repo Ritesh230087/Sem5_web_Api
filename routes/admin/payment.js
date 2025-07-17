@@ -31,8 +31,6 @@ const sendConfirmationNotifications = async (orderId) => {
   }
 };
 
-
-// eSewa success callback endpoint
 router.get('/esewa/callback', async (req, res) => {
   try {
     const { data } = req.query;
